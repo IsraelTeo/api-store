@@ -3,9 +3,9 @@ package com.app.store_api.dto.criteria;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
-
 
 @Getter
 @Setter
@@ -15,15 +15,17 @@ import java.util.UUID;
 @ToString
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class SearchCustomerCriteriaDto {
+public class SearchProductCriteriaDto {
 
-    UUID customerId;
+    UUID productId;
 
     String name;
 
-    String lastName;
+    String tradeMark;
 
-    String dni;
+    BigDecimal price;
+
+    Integer quantityAvailable;
 
     LocalDate creationDate;
 
@@ -37,5 +39,4 @@ public class SearchCustomerCriteriaDto {
 
     // paginación ejemplo: tengo 12 registros y con pageSize pédimos 4 registros por página, tendríamos 3 páginas
     // luego podemos: ir a la página 2 con pageActual y pedir los primeros 2 registros de ahí con pageSize
-
 }

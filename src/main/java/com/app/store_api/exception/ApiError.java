@@ -24,6 +24,13 @@ public enum ApiError {
     CUSTOMER_WITH_SAME_ID(HttpStatus.CONFLICT, "The customer with the same id already exists."),
 
     CUSTOMER_CONVERSION_FAILED(HttpStatus.CONFLICT, "The customer conversion failed."),
+
+    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "The product was not found"),
+
+    PRODUCT_CONVERSION_FAILED(HttpStatus.CONFLICT, "Product conversion failed"),
+
+    SALE_NOT_FOUND(HttpStatus.NOT_FOUND, "Sale was not found"),
+
     ;
 
     HttpStatus status;

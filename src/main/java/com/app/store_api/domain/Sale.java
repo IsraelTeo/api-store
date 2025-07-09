@@ -15,8 +15,8 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(exclude = {"products"})
+@ToString(exclude = {"products"})
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EntityListeners(SaleEntityListener.class)
@@ -35,7 +35,7 @@ public class Sale {
 
     @ManyToMany(
             targetEntity = Product.class,
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             cascade = CascadeType.MERGE
     )
     @JoinTable(

@@ -1,15 +1,11 @@
-package com.app.store_api.dto;
+package com.app.store_api.dto.customer;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 
-import java.util.UUID;
-
 @Builder
 public record CustomerDto(
-        UUID customerId,
-
         @NotBlank(message = "Name must not be blank")
         @Size(max = 50, message = "Name must not exceed 50 characters")
         String name,

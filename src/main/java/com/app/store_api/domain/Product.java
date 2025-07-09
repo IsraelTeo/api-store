@@ -26,7 +26,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID productId;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 50, unique = true)
     String name;
 
     @Column(name = "trade_mark", nullable = false, length = 50)
@@ -35,11 +35,6 @@ public class Product {
     @Column(nullable = false)
     BigDecimal price;
 
-    @Column(name = "quantity_available", nullable = false)
-    Integer quantityAvailable;
-
     @Column(name = "creation_date", nullable = false)
     private LocalDate creationDate;
-
-
 }

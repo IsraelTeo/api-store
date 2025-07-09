@@ -1,7 +1,8 @@
 package com.app.store_api.controller.resource;
 
-import com.app.store_api.dto.CustomerDto;
+import com.app.store_api.dto.customer.CustomerDto;
 import com.app.store_api.dto.criteria.SearchCustomerCriteriaDto;
+import com.app.store_api.dto.customer.CustomerResponseDto;
 import com.app.store_api.exception.ErrorDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -22,8 +23,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 import java.util.UUID;
 
-@Tag(name = "customer", description = "Operations related with customer entity")
-public interface ReservationResource {
+@Tag(
+        name = "customer",
+        description = "Operations related with customer entity"
+)
+public interface CustomerResource {
 
     @Operation(
             summary = "Get list of customers with filters and pagination",
@@ -85,19 +89,12 @@ public interface ReservationResource {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Return the information of customers",
+                            description = "Return the information of customers. The list may be empty if no customers match the search criteria.",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    array = @ArraySchema(schema = @Schema(implementation = CustomerDto.class))
+                                    array = @ArraySchema(schema = @Schema(implementation = CustomerResponseDto.class))
                             )
 
-                    ),
-                    @ApiResponse(
-                            responseCode = "204",
-                            description = "No customers found matching the search criteria",
-                            content = @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE
-                            )
                     ),
                     @ApiResponse(
                             responseCode = "500",
@@ -109,7 +106,7 @@ public interface ReservationResource {
                     )
             }
     )
-    ResponseEntity<List<CustomerDto>> getCustomers(SearchCustomerCriteriaDto criteriaDto);
+    ResponseEntity<List<CustomerResponseDto>> getCustomers(SearchCustomerCriteriaDto criteriaDto);
 
     @Operation(
             summary = "Get the information of a single customer",
@@ -130,7 +127,7 @@ public interface ReservationResource {
                             description = "Return the information of a customer",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = CustomerDto.class)
+                                    schema = @Schema(implementation = CustomerResponseDto.class)
                             )
                     ),
                     @ApiResponse(
@@ -151,7 +148,7 @@ public interface ReservationResource {
                     )
             }
     )
-    ResponseEntity<CustomerDto> getCustomerById(@Min(1) @PathVariable("id") UUID id);
+    ResponseEntity<CustomerResponseDto> getCustomerById(@Min(1) @PathVariable("id") UUID id);
 
     @Operation(
             summary = "Register a customer",
@@ -181,7 +178,7 @@ public interface ReservationResource {
                             description = "Returns the saved customer's information.",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = CustomerDto.class)
+                                    schema = @Schema(implementation = CustomerResponseDto.class)
                             )
                     ),
                     @ApiResponse(
@@ -202,7 +199,7 @@ public interface ReservationResource {
                     )
             }
     )
-    ResponseEntity<CustomerDto> saveCustomer(@RequestBody @Valid CustomerDto customerDto);
+    ResponseEntity<CustomerResponseDto> saveCustomer(@RequestBody @Valid CustomerDto customerDto);
 
     @Operation(
             summary = "Update an existing customer",
@@ -224,7 +221,7 @@ public interface ReservationResource {
                             examples = {
                                     @ExampleObject(
                                             name = "Customer",
-                                            summary = "Example customer to create",
+                                            summary = "Example customer to update",
                                             value = "{" +
                                                     "\n    \"name\": \"Andres\"," +
                                                     "\n    \"lastName\": \"Sacco\"," +
@@ -236,16 +233,16 @@ public interface ReservationResource {
             ),
             responses = {
                     @ApiResponse(
-                            responseCode = "201",
-                            description = "Returns the saved customer's information.",
+                            responseCode = "200",
+                            description = "Returns the updated customer's information.",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = CustomerDto.class)
+                                    schema = @Schema(implementation = CustomerResponseDto.class)
                             )
                     ),
                     @ApiResponse(
-                            responseCode = "400",
-                            description = "Bad request of the information to persist",
+                            responseCode = "404",
+                            description = "Customer not found",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = ErrorDto.class)
@@ -253,7 +250,7 @@ public interface ReservationResource {
                     ),
                     @ApiResponse(
                             responseCode = "500",
-                            description = "Something bad happens to register and obtain the customer",
+                            description = "Something bad happens to update the customer",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = ErrorDto.class)
@@ -261,12 +258,49 @@ public interface ReservationResource {
                     )
             }
     )
-    ResponseEntity<CustomerDto> updateCustomer(@Min(1) @PathVariable("id") UUID id, @RequestBody @Valid CustomerDto customerDto);
+    ResponseEntity<CustomerResponseDto> updateCustomer(@Min(1) @PathVariable("id") UUID id, @RequestBody @Valid CustomerDto customerDto);
 
+    @Operation(
+            summary = "Delete an existing customer",
+            description = """
+    Deletes an existing customer from the system based on the provided UUID.
+    The customer is identified by a unique UUID, which must be included in the request path.
+    If the customer does not exist, an appropriate error is returned.
+    """,
+            parameters = {
+                    @Parameter(
+                            in = ParameterIn.PATH,
+                            name = "id",
+                            description = "Id of the customer to delete",
+                            example = "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+                    )
+            },
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "If customer deleted successfully. No content is returned.",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = Void.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Customer not found",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = ErrorDto.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Something bad happens to update the customer",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = ErrorDto.class)
+                            )
+                    )
+            }
+    )
     ResponseEntity<Void> deleteCustomer(@Min(1) @PathVariable UUID id);
-
-
-
-
-
 }

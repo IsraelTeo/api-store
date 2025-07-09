@@ -1,21 +1,22 @@
 package com.app.store_api.persistence.specification;
 
-import com.app.store_api.domain.Customer;
-import com.app.store_api.dto.criteria.SearchCustomerCriteriaDto;
+import com.app.store_api.domain.Product;
+import com.app.store_api.dto.criteria.SearchProductCriteriaDto;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerSpecification {
+public class ProductSpecification {
 
-    public static Specification<Customer> withSearchCriteria(SearchCustomerCriteriaDto criteriaDTO) {
+    public static Specification<Product> withSearchCriteria(SearchProductCriteriaDto criteriaDTO) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
-            if (criteriaDTO.getCustomerId() != null) {
+
+            if (criteriaDTO.getProductId() != null) {
                 predicates.add(
-                        criteriaBuilder.equal(root.get("customerId"), criteriaDTO.getCustomerId())
+                        criteriaBuilder.equal(root.get("productId"), criteriaDTO.getProductId())
                 );
             }
 
@@ -25,19 +26,25 @@ public class CustomerSpecification {
                 );
             }
 
-            if(criteriaDTO.getLastName() != null){
+            if (criteriaDTO.getTradeMark() != null){
                 predicates.add(
-                        criteriaBuilder.equal(root.get("lastName"), criteriaDTO.getLastName())
+                        criteriaBuilder.equal(root.get("tradeMark"), criteriaDTO.getTradeMark())
                 );
             }
 
-            if (criteriaDTO.getDni() != null) {
+            if (criteriaDTO.getPrice() != null){
                 predicates.add(
-                        criteriaBuilder.equal(root.get("dni"), criteriaDTO.getDni())
+                        criteriaBuilder.equal(root.get("price"), criteriaDTO.getPrice())
                 );
             }
 
-            if (criteriaDTO.getCreationDate() != null) {
+            if (criteriaDTO.getQuantityAvailable() != null){
+                predicates.add(
+                        criteriaBuilder.equal(root.get("quantityAvailable"), criteriaDTO.getQuantityAvailable())
+                );
+            }
+
+            if (criteriaDTO.getCreationDate() != null){
                 predicates.add(
                         criteriaBuilder.equal(root.get("creationDate"), criteriaDTO.getCreationDate())
                 );
@@ -47,14 +54,11 @@ public class CustomerSpecification {
                 assert query != null;
                 if (criteriaDTO.getSortingDirection().equalsIgnoreCase("desc")) {
                     query.orderBy(
-                            criteriaBuilder.desc(root.get(criteriaDTO.getSortField())
-                            )
+                            criteriaBuilder.desc(root.get(criteriaDTO.getSortField()))
                     );
                 } else {
                     query.orderBy(
-                            criteriaBuilder.asc(
-                                    root.get(criteriaDTO.getSortField())
-                            )
+                            criteriaBuilder.asc(root.get(criteriaDTO.getSortField()))
                     );
                 }
             }

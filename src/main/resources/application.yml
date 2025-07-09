@@ -1,0 +1,15 @@
+server:
+  port: 8080
+  compression:
+    enabled: true
+    min-response-size: 2048
+    mime-types: application/json,application/xml,text/html,text/plain
+  servlet:
+    context-path: /api/v1
+
+spring:
+  r2dbc:
+    url: jdbc:postgresql://localhost:5432/store_api
+    username: postgres
+    password: postgres123
+    driver-class-name: org.postgresql.Driver
