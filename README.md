@@ -1,43 +1,26 @@
-🏬 API Backend - Sistema de Bodega
+API Backend - Sistema de Bodega
 
-Bienvenido al repositorio del proyecto API Backend - Sistema de Bodega, una API RESTful desarrollada con Spring Boot y Spring Data JPA, orientada a la gestión de inventario, productos, proveedores, ventas y más dentro de una bodega moderna.
+Una API RESTful orientada a la gestión de una bodega.
 
-Este proyecto sigue buenas prácticas de arquitectura en capas, está documentado con Swagger/OpenAPI y cuenta con validaciones robustas, lo que lo hace ideal tanto para desarrollo profesional como educativo.
-🚀 Características Principales
+Este proyecto contiene:
 
-    CRUD completo para productos, proveedores, categorías y ventas.
+    CRUD completo para productos, clientes y ventas.
 
-    Relaciones bien estructuradas entre entidades (por ejemplo, productos dentro de ventas).
+    Relaciones bien estructuradas entre entidades (por ejemplo, cliete y productos dentro de ventas).
 
-    Validación de datos con anotaciones como @NotBlank, @Size, etc.
-
-    Uso de records y MapStruct para mapeo limpio entre entidades y DTOs.
-
-    Arquitectura organizada en capas: controller, service, repository, dto, config, exception, utils, advice, annotation.
-
-    Persistencia con PostgreSQL usando Spring Data JPA.
-
-    Documentación automática con OpenAPI (Swagger).
-
-    Manejo centralizado de errores con @ControllerAdvice.
-
-    Inyección de dependencias y uso de @Builder con Lombok.
-
-    Logging estructurado para seguimiento de peticiones y errores.
-
-🔧 Tecnologías Usadas
+Tecnologías Usadas
 
     Java 17
-    Lenguaje moderno, robusto y seguro. Soporte completo para programación orientada a objetos.
+    Lenguaje de programación moderno, robusto y seguro.
 
     Spring Boot
     Framework para crear aplicaciones backend de forma rápida y con configuración mínima.
 
     Spring Data JPA
-    Abstracción sobre JPA que facilita la persistencia de datos con repositorios automáticos.
+    Módulo de Spring Framework que funciona como una abstracción sobre JPA para facilitar la persistencia de datos.
 
     PostgreSQL
-    Base de datos relacional, potente y open source, ideal para aplicaciones empresariales.
+    Base de datos relacional ideal para aplicaciones empresariales.
 
     Lombok
     Elimina código repetitivo como getters, setters, builders, etc., mediante anotaciones.
@@ -53,3 +36,31 @@ Este proyecto sigue buenas prácticas de arquitectura en capas, está documentad
 
     SLF4J + Logback
     Logging flexible y personalizable para auditoría y depuración.
+
+ Buenas prácticas
+
+    Uso de archivos .yml para centralizar configuraciones como puertos, credenciales de base de datos, etc.
+
+    Inyección de dependencias a través de constructores utilizando Lombok (@RequiredArgsConstructor) para evitar acoplamiento directo con el framework y facilitar las futuras pruebas unitarias.
+
+    Manejo centralizado de excepciones.
+
+    Documentación automática y actualizada de los endpoints REST con Swagger / OpenAPI.
+
+    Uso de DTOs para transferir datos entre cliente y servidor.
+
+    Validación de datos de entrada en los DTOs utilizando anotaciones como @NotBlank, @Size, @Valid, entre otras.
+
+    Implementación de paginación en endpoints que devuelven listas límitadas de datos para mejorar rendimiento y escalabilidad.
+
+    Arquitectura de capas bien definida: controller, service, repository, dto, mapper, exception, domain, mapper, criteria.
+
+    Uso de nombres descriptivos para variables, constantes, métodos, clases, paquetes e interfaces.
+
+    Aplicación del principio de responsabilidad única (SRP) del conjunto SOLID para mantener clases y métodos mantenibles.
+
+    Mapeos limpios y desacoplados entre entidades y DTOs utilizando MapStruct.
+
+    Logging estructurado con SLF4J y Logback para monitorear el flujo y los errores.
+
+    
