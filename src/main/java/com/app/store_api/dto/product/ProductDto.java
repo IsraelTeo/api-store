@@ -1,5 +1,6 @@
 package com.app.store_api.dto.product;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
 
@@ -11,6 +12,7 @@ public record ProductDto(
         @Size(max = 50, message = "Name must not exceed 50 characters")
         String name,
 
+        @JsonProperty("trade_mark")
         @NotBlank(message = "Trade mark must not be blank")
         @Size(max = 50, message = "Trade mark must not exceed 50 characters")
         String tradeMark,

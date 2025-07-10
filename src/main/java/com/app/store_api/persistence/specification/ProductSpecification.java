@@ -38,12 +38,6 @@ public class ProductSpecification {
                 );
             }
 
-            if (criteriaDTO.getQuantityAvailable() != null){
-                predicates.add(
-                        criteriaBuilder.equal(root.get("quantityAvailable"), criteriaDTO.getQuantityAvailable())
-                );
-            }
-
             if (criteriaDTO.getCreationDate() != null){
                 predicates.add(
                         criteriaBuilder.equal(root.get("creationDate"), criteriaDTO.getCreationDate())
