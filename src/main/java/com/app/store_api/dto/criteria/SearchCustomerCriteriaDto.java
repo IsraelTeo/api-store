@@ -37,5 +37,4 @@ public class SearchCustomerCriteriaDto {
 
     // paginación ejemplo: tengo 12 registros y con pageSize pédimos 4 registros por página, tendríamos 3 páginas
     // luego podemos: ir a la página 2 con pageActual y pedir los primeros 2 registros de ahí con pageSize
-
 }

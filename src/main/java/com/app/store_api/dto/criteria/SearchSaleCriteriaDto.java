@@ -32,5 +32,4 @@ public class SearchSaleCriteriaDto {
     Integer pageActual = 0;
 
     Integer pageSize = 10;
-
 }
