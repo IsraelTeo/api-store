@@ -8,16 +8,17 @@ Este proyecto contiene:
 
     Relaciones bien estructuradas entre entidades (por ejemplo, cliete y productos dentro de ventas).
 
-Tecnologías Usadas
+**Tecnologías Usadas**
 
     Java 17
-    Lenguaje de programación moderno, robusto y seguro.
+     Lenguaje de programación orientado a objetos, robusto y ampliamente utilizado en el desarrollo empresarial por su seguridad.
 
     Spring Boot
     Framework para crear aplicaciones backend de forma rápida y con configuración mínima.
 
     Spring Data JPA
-    Módulo de Spring Framework que funciona como una abstracción sobre JPA para facilitar la persistencia de datos.
+    Módulo de Spring Framework que funciona como una abstracción sobre JPA para facilitar la persistencia 
+    de datos.
 
     PostgreSQL
     Base de datos relacional ideal para aplicaciones empresariales.
@@ -41,7 +42,8 @@ Tecnologías Usadas
 
     Uso de archivos .yml para centralizar configuraciones como puertos, credenciales de base de datos, etc.
 
-    Inyección de dependencias a través de constructores utilizando Lombok (@RequiredArgsConstructor) para evitar acoplamiento directo con el framework y facilitar las futuras pruebas unitarias.
+    Inyección de dependencias a través de constructores utilizando Lombok (@RequiredArgsConstructor) 
+    para evitar acoplamiento directo con el framework y facilitar las futuras pruebas unitarias.
 
     Manejo centralizado de excepciones.
 
@@ -49,15 +51,20 @@ Tecnologías Usadas
 
     Uso de DTOs para transferir datos entre cliente y servidor.
 
-    Validación de datos de entrada en los DTOs utilizando anotaciones como @NotBlank, @Size, @Valid, entre otras.
+    Validación de datos de entrada en los DTOs utilizando anotaciones como @NotBlank, @Size, 
+    @Valid, entre otras.
 
-    Implementación de paginación en endpoints que devuelven listas límitadas de datos para mejorar rendimiento y escalabilidad.
+    Implementación de paginación en endpoints que devuelven listas límitadas de datos para 
+    mejorar rendimiento y escalabilidad.
 
-    Arquitectura de capas bien definida: controller, service, repository, dto, mapper, exception, domain, mapper, criteria.
+    Arquitectura de capas bien definida: controller, service, repository, dto, mapper, 
+    exception, domain, mapper, criteria.
 
-    Uso de nombres descriptivos para variables, constantes, métodos, clases, paquetes e interfaces.
+    Uso de nombres descriptivos para variables, constantes, métodos, clases, paquetes 
+    e interfaces.
 
-    Aplicación del principio de responsabilidad única (SRP) del conjunto SOLID para mantener clases y métodos mantenibles.
+    Aplicación del principio de responsabilidad única (SRP) del conjunto SOLID para mantener 
+    clases y métodos mantenibles.
 
     Mapeos limpios y desacoplados entre entidades y DTOs utilizando MapStruct.
 
