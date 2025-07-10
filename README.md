@@ -1,8 +1,8 @@
-API Backend - Sistema de Bodega
+***API Backend - Sistema de Bodega***
 
 Una API RESTful orientada a la gestión de una bodega.
 
-Este proyecto contiene:
+*Este proyecto contiene:**
 
     CRUD completo para productos, clientes y ventas.
 
@@ -38,7 +38,7 @@ Este proyecto contiene:
     SLF4J + Logback
     Logging flexible y personalizable para auditoría y depuración.
 
- Buenas prácticas
+ ***Buenas prácticas***
 
     Uso de archivos .yml para centralizar configuraciones como puertos, credenciales de base de datos, etc.
 
