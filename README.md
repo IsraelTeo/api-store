@@ -1,4 +1,4 @@
-***API Backend - Sistema de Bodega***
+***API - Sistema de Bodega***
 
 Una API RESTful orientada a la gestión de una bodega.
 
@@ -6,7 +6,7 @@ Una API RESTful orientada a la gestión de una bodega.
 
     CRUD completo para productos, clientes y ventas.
 
-    Relaciones bien estructuradas entre entidades (por ejemplo, cliete y productos dentro de ventas).
+    Relaciones bien estructuradas entre entidades (por ejemplo: cliente y productos dentro de una venta).
 
 **Tecnologías Usadas**
 
