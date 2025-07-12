@@ -5,7 +5,6 @@ import com.app.store_api.domain.Product;
 import com.app.store_api.domain.Sale;
 import com.app.store_api.dto.sale.SaleDto;
 import com.app.store_api.dto.criteria.SearchSaleCriteriaDto;
-import com.app.store_api.dto.sale.SaleResponseDto;
 import com.app.store_api.exception.ApiError;
 import com.app.store_api.exception.StoreException;
 import com.app.store_api.persistence.repository.ISaleRepository;
@@ -47,7 +46,7 @@ public class SaleService implements ISaleService {
 
     @Transactional(readOnly = true)
     @Override
-    public SaleResponseDto getById(UUID id) {
+    public SaleDto getById(UUID id) {
         Optional<Sale> sale = saleRepository.findById(id);
 
         if (sale.isEmpty()) {
@@ -55,12 +54,12 @@ public class SaleService implements ISaleService {
             throw new StoreException(ApiError.SALE_NOT_FOUND);
         }
 
-        return conversionService.convert(sale.get(), SaleResponseDto.class);
+        return conversionService.convert(sale.get(), SaleDto.class);
     }
 
     @Transactional
     @Override
-    public SaleResponseDto save(SaleDto saleDto) {
+    public SaleDto save(SaleDto saleDto) {
         if (saleDto == null) {
             LOGGER.debug("Attempted to save a null SaleDto.");
             throw new StoreException(ApiError.SALE_NOT_FOUND);
@@ -81,12 +80,12 @@ public class SaleService implements ISaleService {
 
         saleRepository.save(sale);
 
-        return conversionService.convert(sale, SaleResponseDto.class);
+        return conversionService.convert(sale, SaleDto.class);
     }
 
     @Transactional
     @Override
-    public SaleResponseDto update(UUID id, SaleDto saleDto) {
+    public SaleDto update(UUID id, SaleDto saleDto) {
         Sale saleFound = saleRepository.findById(id)
                 .orElseThrow(() -> {
                     LOGGER.debug("Sale with ID {} not found..", id);
@@ -105,12 +104,12 @@ public class SaleService implements ISaleService {
 
         Sale updated = saleRepository.save(saleFound);
 
-        return conversionService.convert(updated, SaleResponseDto.class);
+        return conversionService.convert(updated, SaleDto.class);
     }
 
     @Transactional
     @Override
-    public SaleResponseDto deleteById(UUID id) {
+    public SaleDto deleteById(UUID id) {
         Optional<Sale> sale = saleRepository.findById(id);
 
         if (sale.isEmpty()) {
@@ -119,12 +118,12 @@ public class SaleService implements ISaleService {
         }
 
         saleRepository.deleteById(id);
-        return conversionService.convert(sale.get(), SaleResponseDto.class);
+        return conversionService.convert(sale.get(), SaleDto.class);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<SaleResponseDto> getSales(SearchSaleCriteriaDto criteriaDto) {
+    public List<SaleDto> getSales(SearchSaleCriteriaDto criteriaDto) {
         Pageable pageable = PageRequest.of(criteriaDto.getPageActual(), criteriaDto.getPageSize());
 
         List<Sale> sales = saleRepository.findAll(SaleSpecification.withSearchCriteria(criteriaDto), pageable);
@@ -135,7 +134,7 @@ public class SaleService implements ISaleService {
         }
 
         return sales.stream()
-                .map(sale -> conversionService.convert(sale, SaleResponseDto.class))
+                .map(sale -> conversionService.convert(sale, SaleDto.class))
                 .collect(Collectors.toList());
     }
 }

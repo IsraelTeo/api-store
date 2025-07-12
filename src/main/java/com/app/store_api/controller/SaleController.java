@@ -3,7 +3,6 @@ package com.app.store_api.controller;
 import com.app.store_api.dto.product.ProductDto;
 import com.app.store_api.dto.sale.SaleDto;
 import com.app.store_api.dto.criteria.SearchSaleCriteriaDto;
-import com.app.store_api.dto.sale.SaleResponseDto;
 import com.app.store_api.exception.ApiError;
 import com.app.store_api.exception.StoreException;
 import com.app.store_api.service.impl.SaleService;
@@ -35,31 +34,31 @@ public class SaleController {
     SaleService saleService;
 
     @GetMapping
-    public ResponseEntity<List<SaleResponseDto>> getSales(SearchSaleCriteriaDto criteriaDto) {
+    public ResponseEntity<List<SaleDto>> getSales(SearchSaleCriteriaDto criteriaDto) {
         LOGGER.info("Fetching all sales");
-        List<SaleResponseDto> response = saleService.getSales(criteriaDto);
+        List<SaleDto> response = saleService.getSales(criteriaDto);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SaleResponseDto> getSaleById(@Min(1) @PathVariable("id") UUID id) {
+    public ResponseEntity<SaleDto> getSaleById(@Min(1) @PathVariable("id") UUID id) {
         LOGGER.info("Fetching sale with ID {}", id);
-        SaleResponseDto response = saleService.getById(id);
+        SaleDto response = saleService.getById(id);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
     @RateLimiter(name = "post-sale", fallbackMethod = "fallBackPost")
-    public ResponseEntity<SaleResponseDto> saveSale(@RequestBody @Valid SaleDto saleDto) {
+    public ResponseEntity<SaleDto> saveSale(@RequestBody @Valid SaleDto saleDto) {
         LOGGER.info("Saving new sale");
-        SaleResponseDto response = saleService.save(saleDto);
+        SaleDto response = saleService.save(saleDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SaleResponseDto> saleProduct(@Min(1) @PathVariable("id") UUID id, @RequestBody @Valid SaleDto saleDto) {
+    public ResponseEntity<SaleDto> saleProduct(@Min(1) @PathVariable("id") UUID id, @RequestBody @Valid SaleDto saleDto) {
         LOGGER.info("Updating sale with ID {}", id);
-        SaleResponseDto response = saleService.update(id, saleDto);
+        SaleDto response = saleService.update(id, saleDto);
         return ResponseEntity.ok(response);
     }
 

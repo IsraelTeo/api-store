@@ -2,7 +2,6 @@ package com.app.store_api.controller.resource;
 
 import com.app.store_api.dto.product.ProductDto;
 import com.app.store_api.dto.criteria.SearchProductCriteriaDto;
-import com.app.store_api.dto.product.ProductResponseDto;
 import com.app.store_api.exception.ErrorDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -46,11 +45,11 @@ public interface ProductResource {
                     @Parameter(in = ParameterIn.QUERY, name = "pageSize", description = "Number of records per page", example = "10")
             },
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Returns the list of products", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = ProductResponseDto.class)))),
+                    @ApiResponse(responseCode = "200", description = "Returns the list of products", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = @ArraySchema(schema = @Schema(implementation = ProductDto.class)))),
                     @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(schema = @Schema(implementation = ErrorDto.class)))
             }
     )
-    ResponseEntity<List<ProductResponseDto>> getProducts(SearchProductCriteriaDto criteriaDto);
+    ResponseEntity<List<ProductDto>> getProducts(SearchProductCriteriaDto criteriaDto);
 
     @Operation(
             summary = "Get a single product by ID",
@@ -58,12 +57,12 @@ public interface ProductResource {
                     @Parameter(in = ParameterIn.PATH, name = "id", description = "Product ID", example = "3fa85f64-5717-4562-b3fc-2c963f66afa6")
             },
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Returns the product", content = @Content(schema = @Schema(implementation = ProductResponseDto.class))),
+                    @ApiResponse(responseCode = "200", description = "Returns the product", content = @Content(schema = @Schema(implementation = ProductDto.class))),
                     @ApiResponse(responseCode = "404", description = "Product not found", content = @Content(schema = @Schema(implementation = ErrorDto.class))),
                     @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(schema = @Schema(implementation = ErrorDto.class)))
             }
     )
-    ResponseEntity<ProductResponseDto> getProductById(@PathVariable("id") UUID id);
+    ResponseEntity<ProductDto> getProductById(@PathVariable("id") UUID id);
 
     @Operation(
             summary = "Create a new product",
@@ -86,12 +85,12 @@ public interface ProductResource {
                     )
             ),
             responses = {
-                    @ApiResponse(responseCode = "201", description = "Product created", content = @Content(schema = @Schema(implementation = ProductResponseDto.class))),
+                    @ApiResponse(responseCode = "201", description = "Product created", content = @Content(schema = @Schema(implementation = ProductDto.class))),
                     @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content(schema = @Schema(implementation = ErrorDto.class))),
                     @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(schema = @Schema(implementation = ErrorDto.class)))
             }
     )
-    ResponseEntity<ProductResponseDto> saveProduct(@RequestBody @Valid ProductDto productDto);
+    ResponseEntity<ProductDto> saveProduct(@RequestBody @Valid ProductDto productDto);
 
     @Operation(
             summary = "Update an existing product",
@@ -117,12 +116,12 @@ public interface ProductResource {
                     )
             ),
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Product updated", content = @Content(schema = @Schema(implementation = ProductResponseDto.class))),
+                    @ApiResponse(responseCode = "200", description = "Product updated", content = @Content(schema = @Schema(implementation = ProductDto.class))),
                     @ApiResponse(responseCode = "404", description = "Product not found", content = @Content(schema = @Schema(implementation = ErrorDto.class))),
                     @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(schema = @Schema(implementation = ErrorDto.class)))
             }
     )
-    ResponseEntity<ProductResponseDto> updateProduct(@PathVariable("id") UUID id, @RequestBody @Valid ProductDto productDto);
+    ResponseEntity<ProductDto> updateProduct(@PathVariable("id") UUID id, @RequestBody @Valid ProductDto productDto);
 
     @Operation(
             summary = "Delete a product",

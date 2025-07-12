@@ -2,7 +2,6 @@ package com.app.store_api.controller.resource;
 
 import com.app.store_api.dto.customer.CustomerDto;
 import com.app.store_api.dto.criteria.SearchCustomerCriteriaDto;
-import com.app.store_api.dto.customer.CustomerResponseDto;
 import com.app.store_api.exception.ErrorDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -92,7 +91,7 @@ public interface CustomerResource {
                             description = "Return the information of customers. The list may be empty if no customers match the search criteria.",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    array = @ArraySchema(schema = @Schema(implementation = CustomerResponseDto.class))
+                                    array = @ArraySchema(schema = @Schema(implementation = CustomerDto.class))
                             )
 
                     ),
@@ -106,7 +105,7 @@ public interface CustomerResource {
                     )
             }
     )
-    ResponseEntity<List<CustomerResponseDto>> getCustomers(SearchCustomerCriteriaDto criteriaDto);
+    ResponseEntity<List<CustomerDto>> getCustomers(SearchCustomerCriteriaDto criteriaDto);
 
     @Operation(
             summary = "Get the information of a single customer",
@@ -127,7 +126,7 @@ public interface CustomerResource {
                             description = "Return the information of a customer",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = CustomerResponseDto.class)
+                                    schema = @Schema(implementation = CustomerDto.class)
                             )
                     ),
                     @ApiResponse(
@@ -148,7 +147,7 @@ public interface CustomerResource {
                     )
             }
     )
-    ResponseEntity<CustomerResponseDto> getCustomerById(@Min(1) @PathVariable("id") UUID id);
+    ResponseEntity<CustomerDto> getCustomerById(@Min(1) @PathVariable("id") UUID id);
 
     @Operation(
             summary = "Register a customer",
@@ -178,7 +177,7 @@ public interface CustomerResource {
                             description = "Returns the saved customer's information.",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = CustomerResponseDto.class)
+                                    schema = @Schema(implementation = CustomerDto.class)
                             )
                     ),
                     @ApiResponse(
@@ -199,7 +198,7 @@ public interface CustomerResource {
                     )
             }
     )
-    ResponseEntity<CustomerResponseDto> saveCustomer(@RequestBody @Valid CustomerDto customerDto);
+    ResponseEntity<CustomerDto> saveCustomer(@RequestBody @Valid CustomerDto customerDto);
 
     @Operation(
             summary = "Update an existing customer",
@@ -237,7 +236,7 @@ public interface CustomerResource {
                             description = "Returns the updated customer's information.",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = CustomerResponseDto.class)
+                                    schema = @Schema(implementation = CustomerDto.class)
                             )
                     ),
                     @ApiResponse(
@@ -258,7 +257,7 @@ public interface CustomerResource {
                     )
             }
     )
-    ResponseEntity<CustomerResponseDto> updateCustomer(@Min(1) @PathVariable("id") UUID id, @RequestBody @Valid CustomerDto customerDto);
+    ResponseEntity<CustomerDto> updateCustomer(@Min(1) @PathVariable("id") UUID id, @RequestBody @Valid CustomerDto customerDto);
 
     @Operation(
             summary = "Delete an existing customer",

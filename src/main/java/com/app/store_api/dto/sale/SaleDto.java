@@ -3,6 +3,7 @@ package com.app.store_api.dto.sale;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 import lombok.Builder;
 
 import java.util.List;
@@ -10,6 +11,10 @@ import java.util.UUID;
 
 @Builder
 public record SaleDto(
+
+        @JsonProperty("sale_id")
+        @Null(message = "Sale ID must be null; it is generated automatically")
+        UUID saleId,
 
         @JsonProperty("customer_id")
         @NotNull(message = "Customer ID must not be null")

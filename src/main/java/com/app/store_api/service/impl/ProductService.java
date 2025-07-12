@@ -3,7 +3,6 @@ package com.app.store_api.service.impl;
 import com.app.store_api.domain.Product;
 import com.app.store_api.dto.product.ProductDto;
 import com.app.store_api.dto.criteria.SearchProductCriteriaDto;
-import com.app.store_api.dto.product.ProductResponseDto;
 import com.app.store_api.exception.ApiError;
 import com.app.store_api.exception.StoreException;
 import com.app.store_api.persistence.repository.IProductRepository;
@@ -37,19 +36,19 @@ public class ProductService implements IProductService {
 
     @Transactional(readOnly = true)
     @Override
-    public ProductResponseDto getById(UUID id) {
+    public ProductDto getById(UUID id) {
         Optional<Product> product = productRepository.findById(id);
         if (product.isEmpty()) {
             LOGGER.debug("Product with ID {} not found..", id);
             throw new StoreException(ApiError.PRODUCT_NOT_FOUND);
         }
 
-        return conversionService.convert(product.get(), ProductResponseDto.class);
+        return conversionService.convert(product.get(), ProductDto.class);
     }
 
     @Transactional
     @Override
-    public ProductResponseDto save(ProductDto productDto) {
+    public ProductDto save(ProductDto productDto) {
         if (Objects.isNull(productDto)) {
             LOGGER.debug("Attempted to save a null ProductDto.");
             throw new StoreException(ApiError.PRODUCT_NOT_FOUND);
@@ -65,12 +64,12 @@ public class ProductService implements IProductService {
 
         productRepository.save(product);
 
-        return conversionService.convert(product, ProductResponseDto.class);
+        return conversionService.convert(product, ProductDto.class);
     }
 
     @Transactional
     @Override
-    public ProductResponseDto update(UUID id, ProductDto productDto) {
+    public ProductDto update(UUID id, ProductDto productDto) {
         if (!productRepository.existsById(id)) {
             LOGGER.debug("Product with ID {} not found. Cannot update.", id);
             throw new StoreException(ApiError.PRODUCT_NOT_FOUND);
@@ -80,7 +79,7 @@ public class ProductService implements IProductService {
 
         Product updatedProduct = productRepository.save(Objects.requireNonNull(product));
 
-        return conversionService.convert(updatedProduct, ProductResponseDto.class);
+        return conversionService.convert(updatedProduct, ProductDto.class);
     }
 
     @Transactional
@@ -96,7 +95,7 @@ public class ProductService implements IProductService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<ProductResponseDto> getProducts(SearchProductCriteriaDto criteriaDto) {
+    public List<ProductDto> getProducts(SearchProductCriteriaDto criteriaDto) {
         Pageable pageable = PageRequest.of(criteriaDto.getPageActual(), criteriaDto.getPageSize());
 
         List<Product> products = productRepository.findAll(ProductSpecification.withSearchCriteria(criteriaDto), pageable);
@@ -107,7 +106,7 @@ public class ProductService implements IProductService {
         }
 
         return products.stream()
-                .map(product -> conversionService.convert(product, ProductResponseDto.class))
+                .map(product -> conversionService.convert(product, ProductDto.class))
                 .collect(Collectors.toList());
     }
 

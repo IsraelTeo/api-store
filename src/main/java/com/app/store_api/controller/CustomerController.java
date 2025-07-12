@@ -3,7 +3,6 @@ package com.app.store_api.controller;
 import com.app.store_api.controller.resource.CustomerResource;
 import com.app.store_api.dto.customer.CustomerDto;
 import com.app.store_api.dto.criteria.SearchCustomerCriteriaDto;
-import com.app.store_api.dto.customer.CustomerResponseDto;
 import com.app.store_api.exception.ApiError;
 import com.app.store_api.exception.StoreException;
 import com.app.store_api.service.impl.CustomerService;
@@ -35,31 +34,31 @@ public class CustomerController implements CustomerResource {
     CustomerService customerService;
 
     @GetMapping
-    public ResponseEntity<List<CustomerResponseDto>> getCustomers(SearchCustomerCriteriaDto criteriaDto) {
+    public ResponseEntity<List<CustomerDto>> getCustomers(SearchCustomerCriteriaDto criteriaDto) {
         LOGGER.info("Obtain all the customers");
-        List<CustomerResponseDto> response = customerService.getCustomers(criteriaDto);
+        List<CustomerDto> response = customerService.getCustomers(criteriaDto);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CustomerResponseDto> getCustomerById(@Min(1) @PathVariable("id") UUID id) {
+    public ResponseEntity<CustomerDto> getCustomerById(@Min(1) @PathVariable("id") UUID id) {
         LOGGER.info("Obtain information from a customer with {}", id);
-        CustomerResponseDto response = customerService.getById(id);
+        CustomerDto response = customerService.getById(id);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
     @RateLimiter(name = "post-customer", fallbackMethod = "fallBackPost")
-    public ResponseEntity<CustomerResponseDto> saveCustomer(@RequestBody @Valid CustomerDto customerDto) {
+    public ResponseEntity<CustomerDto> saveCustomer(@RequestBody @Valid CustomerDto customerDto) {
         LOGGER.info("Saving new customer");
-        CustomerResponseDto response = customerService.save(customerDto);
+        CustomerDto response = customerService.save(customerDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CustomerResponseDto> updateCustomer(@Min(1) @PathVariable("id") UUID id, @RequestBody @Valid CustomerDto customerDto) {
+    public ResponseEntity<CustomerDto> updateCustomer(@Min(1) @PathVariable("id") UUID id, @RequestBody @Valid CustomerDto customerDto) {
         LOGGER.info("Updating a customer with {}", id);
-        CustomerResponseDto response = customerService.update(id, customerDto);
+        CustomerDto response = customerService.update(id, customerDto);
         return ResponseEntity.ok(response);
     }
 

@@ -2,11 +2,19 @@ package com.app.store_api.dto.customer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 
+import java.util.UUID;
+
 @Builder
 public record CustomerDto(
+
+        @JsonProperty("customer_id")
+        @Null(message = "Customer ID must be null; it is generated automatically")
+        UUID customerId,
+
         @NotBlank(message = "Name must not be blank")
         @Size(max = 50, message = "Name must not exceed 50 characters")
         String name,

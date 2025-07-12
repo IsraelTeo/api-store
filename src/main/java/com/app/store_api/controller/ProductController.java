@@ -3,7 +3,6 @@ package com.app.store_api.controller;
 import com.app.store_api.controller.resource.ProductResource;
 import com.app.store_api.dto.product.ProductDto;
 import com.app.store_api.dto.criteria.SearchProductCriteriaDto;
-import com.app.store_api.dto.product.ProductResponseDto;
 import com.app.store_api.exception.ApiError;
 import com.app.store_api.exception.StoreException;
 import com.app.store_api.service.impl.ProductService;
@@ -35,31 +34,31 @@ public class ProductController implements ProductResource {
     ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<ProductResponseDto>> getProducts(SearchProductCriteriaDto criteriaDto) {
+    public ResponseEntity<List<ProductDto>> getProducts(SearchProductCriteriaDto criteriaDto) {
         LOGGER.info("Fetching all products");
-        List<ProductResponseDto> response = productService.getProducts(criteriaDto);
+        List<ProductDto> response = productService.getProducts(criteriaDto);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductResponseDto> getProductById(@Min(1) @PathVariable("id") UUID id) {
+    public ResponseEntity<ProductDto> getProductById(@Min(1) @PathVariable("id") UUID id) {
         LOGGER.info("Fetching product with ID {}", id);
-        ProductResponseDto response = productService.getById(id);
+        ProductDto response = productService.getById(id);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
     @RateLimiter(name = "post-product", fallbackMethod = "fallBackPost")
-    public ResponseEntity<ProductResponseDto> saveProduct(@RequestBody @Valid ProductDto productDto) {
+    public ResponseEntity<ProductDto> saveProduct(@RequestBody @Valid ProductDto productDto) {
         LOGGER.info("Saving new product");
-        ProductResponseDto response = productService.save(productDto);
+        ProductDto response = productService.save(productDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductResponseDto> updateProduct(@Min(1) @PathVariable("id") UUID id, @RequestBody @Valid ProductDto productDto) {
+    public ResponseEntity<ProductDto> updateProduct(@Min(1) @PathVariable("id") UUID id, @RequestBody @Valid ProductDto productDto) {
         LOGGER.info("Updating product with ID {}", id);
-        ProductResponseDto response = productService.update(id, productDto);
+        ProductDto response = productService.update(id, productDto);
         return ResponseEntity.ok(response);
     }
 

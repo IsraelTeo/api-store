@@ -3,7 +3,6 @@ package com.app.store_api.service.impl;
 import com.app.store_api.domain.Customer;
 import com.app.store_api.dto.customer.CustomerDto;
 import com.app.store_api.dto.criteria.SearchCustomerCriteriaDto;
-import com.app.store_api.dto.customer.CustomerResponseDto;
 import com.app.store_api.exception.ApiError;
 import com.app.store_api.exception.StoreException;
 import com.app.store_api.persistence.repository.ICustomerRepository;
@@ -36,19 +35,19 @@ public class CustomerService implements ICustomerService {
 
     @Transactional(readOnly = true)
     @Override
-    public CustomerResponseDto getById(UUID id) {
+    public CustomerDto getById(UUID id) {
         Optional<Customer> customer = customerRepository.findById(id);
         if (customer.isEmpty()) {
             LOGGER.debug("Not exist customer with the id {}", id);
            throw new StoreException(ApiError.CUSTOMER_NOT_FOUND);
         }
 
-        return conversionService.convert(customer.get(), CustomerResponseDto.class);
+        return conversionService.convert(customer.get(), CustomerDto.class);
     }
 
     @Transactional
     @Override
-    public CustomerResponseDto save(CustomerDto customerDto) {
+    public CustomerDto save(CustomerDto customerDto) {
         if (Objects.isNull(customerDto)) {
             LOGGER.debug("Attempted to save a null CustomerDto.");
             throw new StoreException(ApiError.CUSTOMER_NOT_FOUND);
@@ -64,12 +63,12 @@ public class CustomerService implements ICustomerService {
 
         customerRepository.save(customer);
 
-        return conversionService.convert(customer, CustomerResponseDto.class);
+        return conversionService.convert(customer, CustomerDto.class);
     }
 
     @Transactional
     @Override
-    public CustomerResponseDto update(UUID id, CustomerDto customerDto) {
+    public CustomerDto update(UUID id, CustomerDto customerDto) {
         if (!customerRepository.existsById(id)) {
             LOGGER.debug("Customer with ID {} not found. Cannot update.", id);
             throw new StoreException(ApiError.CUSTOMER_NOT_FOUND);
@@ -79,7 +78,7 @@ public class CustomerService implements ICustomerService {
 
         Customer customerUpdated = customerRepository.save(Objects.requireNonNull(customer));
 
-        return conversionService.convert(customer, CustomerResponseDto.class);
+        return conversionService.convert(customer, CustomerDto.class);
     }
 
     @Transactional
@@ -95,7 +94,7 @@ public class CustomerService implements ICustomerService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<CustomerResponseDto> getCustomers(SearchCustomerCriteriaDto criteriaDto) {
+    public List<CustomerDto> getCustomers(SearchCustomerCriteriaDto criteriaDto) {
         Pageable pageable = PageRequest.of(criteriaDto.getPageActual(), criteriaDto.getPageSize());
 
         List<Customer> customers = customerRepository.findAll(CustomerSpecification.withSearchCriteria(criteriaDto), pageable);
@@ -106,7 +105,7 @@ public class CustomerService implements ICustomerService {
         }
 
         return customers.stream()
-                .map(customer -> conversionService.convert(customer, CustomerResponseDto.class))
+                .map(customer -> conversionService.convert(customer, CustomerDto.class))
                 .collect(Collectors.toList());
     }
 }

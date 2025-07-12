@@ -5,9 +5,15 @@ import jakarta.validation.constraints.*;
 import lombok.Builder;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Builder
 public record ProductDto(
+
+        @JsonProperty("product_id")
+        @Null(message = "Product ID must be null; it is generated automatically")
+        UUID productId,
+
         @NotBlank(message = "Name must not be blank")
         @Size(max = 50, message = "Name must not exceed 50 characters")
         String name,
@@ -18,7 +24,7 @@ public record ProductDto(
         String tradeMark,
 
         @NotNull(message = "Price must not be null")
-        @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than 0")
+        @DecimalMin(value = "0.1", inclusive = false, message = "Price must be greater than 0")
         BigDecimal price
 ) {
 }

@@ -1,13 +1,13 @@
 package com.app.store_api.mapper;
 
 import com.app.store_api.domain.Product;
-import com.app.store_api.dto.product.ProductResponseDto;
+import com.app.store_api.dto.product.ProductDto;
 import org.mapstruct.Mapper;
 import org.springframework.core.convert.converter.Converter;
 
 @Mapper(componentModel = "spring")
-public interface ProductMapper extends Converter<Product, ProductResponseDto> {
+public interface ProductMapper extends Converter<Product, ProductDto> {
 
     @Override
-    ProductResponseDto convert(Product source);
+    ProductDto convert(Product source);
 }
